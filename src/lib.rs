@@ -56,6 +56,10 @@ pub use measurements::Pressure;
 pub use measurements::Temperature;
 pub use rh::RelativeHumidity;
 
+pub mod screen {
+    pub use sensehat_screen::*;
+}
+
 use i2cdev::linux::{LinuxI2CDevice, LinuxI2CError};
 
 #[cfg(feature = "rtimu")]
@@ -353,6 +357,12 @@ impl From<lsm9ds1::Error> for SenseHatError {
 impl From<std::string::FromUtf16Error> for SenseHatError {
     fn from(err: std::string::FromUtf16Error) -> SenseHatError {
         SenseHatError::CharacterError(err)
+    }
+}
+
+impl From<sensehat_screen::error::ScreenError> for SenseHatError {
+    fn from(_err: sensehat_screen::error::ScreenError) -> SenseHatError {
+        SenseHatError::ScreenError
     }
 }
 
